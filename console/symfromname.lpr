@@ -2,6 +2,9 @@ program symfromname;
 
 uses windows,sysutils,udebug in '..\udebug.pas';
 
+var
+address:int64;
+
 function _symfromname(dllname,symbol:string):boolean;
 var
 hprocess:thandle;
@@ -70,8 +73,13 @@ end;
 begin
 
   try
-  _symfromname('c:\windows\system32\wdigest.dll','SpAcceptCredentials');
 
+
+    if udebug._symfromname('c:\windows\system32\wdigest.dll','SpAcceptCredentials',address)
+     then writeln(address)
+     else writeln('failed');
+
+    //_symfromname('c:\windows\system32\wdigest.dll','SpAcceptCredentials');
   except
     on e:exception do writeln(e.message);
   end;
