@@ -89,7 +89,7 @@ type
   SYMBOL_INFO=TSYMBOL_INFO ;
 
 function SymLoadModuleEx(hProcess, hFile: THANDLE; ImageName, ModuleName: PAnsiChar; BaseOfDll: INT64;
-  DllSize: DWORD; Data: PMODLOAD_DATA; Flag: DWORD): INT64; stdcall; external DbgHelpDll
+  DllSize: DWORD; Data: PMODLOAD_DATA; Flag: DWORD): INT64; stdcall; external DbgHelpDll;
 
 function SymInitialize(aHandle: HMODULE; aUserSearchPath: PChar;
   aInvadeProcess: Boolean): Boolean; stdcall; external DbgHelpDll
@@ -99,9 +99,9 @@ function SymInitialize(aHandle: HMODULE; aUserSearchPath: PChar;
   name 'SymInitialize'
 {$ENDIF};
 
-function SymSetOptions(SymOptions: DWORD): DWORD; stdcall;external DbgHelpDll
+function SymSetOptions(SymOptions: DWORD): DWORD; stdcall;external DbgHelpDll;
 
-function SymFromName(hProcess: THANDLE; Name: pchar; Symbol: pointer): BOOL; stdcall;external DbgHelpDll
+function SymFromName(hProcess: THANDLE; Name: pchar; Symbol: pointer): BOOL; stdcall;external DbgHelpDll;
 
 function SymFromAddr(aHandle: HMODULE;
   aAdress: int64;

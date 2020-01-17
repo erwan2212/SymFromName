@@ -6,4 +6,6 @@
 *.ppu
 *.o
 *.a
+*.bak
+*.compiled
 

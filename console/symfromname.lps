@@ -2,13 +2,12 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="11"/>
+    <Version Value="10"/>
     <BuildModes Active="Default"/>
     <Units Count="2">
       <Unit0>
         <Filename Value="symfromname.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="47"/>
         <CursorPos X="49" Y="65"/>
         <UsageCount Value="20"/>
@@ -16,14 +15,16 @@
       </Unit0>
       <Unit1>
         <Filename Value="..\udebug.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="92"/>
-        <CursorPos X="106" Y="104"/>
-        <UsageCount Value="10"/>
+        <TopLine Value="94"/>
+        <CursorPos X="63" Y="109"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit1>
     </Units>
-    <JumpHistory Count="8" HistoryIndex="7">
+    <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
         <Filename Value="symfromname.lpr"/>
         <Caret Line="2"/>
@@ -56,10 +57,10 @@
         <Filename Value="symfromname.lpr"/>
         <Caret Line="54" Column="43" TopLine="35"/>
       </Position8>
+      <Position9>
+        <Filename Value="symfromname.lpr"/>
+        <Caret Line="65" Column="49" TopLine="47"/>
+      </Position9>
     </JumpHistory>
-    <RunParams>
-      <FormatVersion Value="2"/>
-      <Modes Count="0" ActiveMode=""/>
-    </RunParams>
   </ProjectSession>
 </CONFIG>
