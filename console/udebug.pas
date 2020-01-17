@@ -205,7 +205,7 @@ if (SymBase=0) or (GetLastError()<>ERROR_SUCCESS) then
 		//CloseHandle(hProcess);
 		exit;
 	end;
-//writeln('symbase'+inttohex(symbase,sizeof(symbase));
+//writeln('symbase:'+inttohex(symbase,sizeof(symbase)));
 //
 i := SizeOf(udebug.SYMBOL_INFO);
   zeromemory(@SymbolInfo, i);
@@ -226,7 +226,7 @@ if not SymFromName(hProcess, pchar(symbol), @SymbolInfo) then
 
 //showmessage(inttohex(SymbolInfo.Address,sizeof(int64) ));
 //writeln(SymbolInfo.ModBase);
-address :=  SymbolInfo.Address ;
+address :=  SymbolInfo.Address-symbase ;
 result:=true;
 
 SymCleanup(GetCurrentProcess());

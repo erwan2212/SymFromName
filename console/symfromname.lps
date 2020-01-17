@@ -4,27 +4,33 @@
     <PathDelim Value="\"/>
     <Version Value="10"/>
     <BuildModes Active="Release"/>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
         <Filename Value="symfromname.lpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="59"/>
-        <CursorPos X="63" Y="75"/>
-        <UsageCount Value="20"/>
+        <CursorPos X="33" Y="23"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\udebug.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="111"/>
-        <CursorPos X="66" Y="95"/>
-        <UsageCount Value="20"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="88"/>
+        <CursorPos X="70" Y="105"/>
+        <UsageCount Value="23"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="udebug.pas"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="211"/>
+        <CursorPos X="75" Y="226"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit2>
     </Units>
-    <JumpHistory Count="11" HistoryIndex="10">
+    <JumpHistory Count="18" HistoryIndex="17">
       <Position1>
         <Filename Value="symfromname.lpr"/>
         <Caret Line="2"/>
@@ -34,41 +40,69 @@
         <Caret Column="31"/>
       </Position2>
       <Position3>
-        <Filename Value="..\udebug.pas"/>
-        <Caret Line="92" Column="90" TopLine="79"/>
+        <Filename Value="symfromname.lpr"/>
+        <Caret Line="66" Column="14" TopLine="43"/>
       </Position3>
       <Position4>
-        <Filename Value="..\udebug.pas"/>
-        <Caret Line="102" Column="79" TopLine="89"/>
+        <Filename Value="symfromname.lpr"/>
+        <Caret Line="3" Column="14"/>
       </Position4>
       <Position5>
-        <Filename Value="..\udebug.pas"/>
-        <Caret Line="104" Column="106" TopLine="91"/>
+        <Filename Value="symfromname.lpr"/>
+        <Caret Line="54" Column="43" TopLine="35"/>
       </Position5>
       <Position6>
         <Filename Value="symfromname.lpr"/>
-        <Caret Line="66" Column="14" TopLine="43"/>
+        <Caret Line="65" Column="49" TopLine="47"/>
       </Position6>
       <Position7>
         <Filename Value="symfromname.lpr"/>
-        <Caret Line="3" Column="14"/>
+        <Caret Line="73" Column="10" TopLine="55"/>
       </Position7>
       <Position8>
         <Filename Value="symfromname.lpr"/>
-        <Caret Line="54" Column="43" TopLine="35"/>
+        <Caret Line="82" Column="82" TopLine="59"/>
       </Position8>
       <Position9>
         <Filename Value="symfromname.lpr"/>
-        <Caret Line="65" Column="49" TopLine="47"/>
+        <Caret Line="79" Column="51" TopLine="64"/>
       </Position9>
       <Position10>
-        <Filename Value="..\udebug.pas"/>
-        <Caret Line="109" Column="63" TopLine="94"/>
+        <Filename Value="symfromname.lpr"/>
+        <Caret Line="16" Column="73"/>
       </Position10>
       <Position11>
         <Filename Value="symfromname.lpr"/>
-        <Caret Line="73" Column="10" TopLine="55"/>
+        <Caret Line="17" Column="40"/>
       </Position11>
+      <Position12>
+        <Filename Value="symfromname.lpr"/>
+        <Caret Line="16" Column="41"/>
+      </Position12>
+      <Position13>
+        <Filename Value="symfromname.lpr"/>
+        <Caret Line="21" Column="28" TopLine="3"/>
+      </Position13>
+      <Position14>
+        <Filename Value="symfromname.lpr"/>
+        <Caret Line="19" Column="33" TopLine="3"/>
+      </Position14>
+      <Position15>
+        <Filename Value="symfromname.lpr"/>
+        <Caret Line="7" Column="27"/>
+      </Position15>
+      <Position16>
+        <Filename Value="symfromname.lpr"/>
+        <Caret Line="19" Column="15"/>
+      </Position16>
+      <Position17>
+        <Filename Value="symfromname.lpr"/>
+        <Caret Line="4" Column="23"/>
+      </Position17>
+      <Position18>
+        <Filename Value="udebug.pas"/>
+        <Caret Line="208" TopLine="201"/>
+      </Position18>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

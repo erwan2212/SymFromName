@@ -10,8 +10,12 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     Button2: TButton;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Button3: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -104,10 +108,18 @@ var
 address:int64; //dword64
 begin
 
-if _SymFromName('wdigest.dll','SpAcceptCredentials',address) then showmessage(inttohex(address,sizeof(address)));
+if _SymFromName(edit1.text,edit2.text,address) then showmessage(inttohex(address,sizeof(address)));
 
 
 
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+var hmod:thandle;
+begin
+hmod:=LoadLibrary (pchar(paramstr(1)));
+    writeln(inttohex(hmod,sizeof(hmod)));
+    //Header := ImageNtHeader(hmod);
 end;
 
 end.
