@@ -2,7 +2,7 @@ unit udebug;
 
 interface
 
-uses windows;
+uses windows,sysutils;
 
 const
   SYMOPT_CASE_INSENSITIVE  = $00000001;
@@ -115,8 +115,134 @@ function SymFromAddr(aHandle: HMODULE;
 
 function SymCleanup(aHandle: HMODULE): Boolean; stdcall; external DbgHelpDll;
 
+function _SymFromName(dllname,symbol:string;var address:int64):boolean;
+function _SymFromAddr(dllname:string;address:int64;var name:string):boolean;
 
 implementation
+
+function _SymFromAddr(dllname:string;address:int64;var name:string):boolean;
+var
+  Hprocess: HMODULE;
+  i            : cardinal;
+  Deplacement  : dword;
+  SymbolInfo   : udebug.SYMBOL_INFO; //TSYMBOL_INFO;
+  //Result       : string;
+  symbase:int64; //dword64
+begin
+result:=false;
+  Hprocess := getcurrentprocess;
+     //une fonction quelconque,l'adresse peut être supérieur jusqu'à la prochaine fonction
+
+
+  SymSetOptions(SYMOPT_UNDNAME or SYMOPT_DEBUG or SYMOPT_DEFERRED_LOADS or SYMOPT_PUBLICS_ONLY);
+  //SymSetOptions(SYMOPT_UNDNAME or SYMOPT_DEBUG or SYMOPT_DEFERRED_LOADS);
+
+  SetEnvironmentVariable('_NT_SYMBOL_PATH', 'SRV*C:\\WINDOWS\\TEMP*http://msdl.microsoft.com/download/symbols');
+//
+if not SymInitialize(hProcess, nil, TRUE) then
+	begin
+		raise exception.create('Error with SymInitialize : '+inttostr( GetLastError()));
+		//CloseHandle(hProcess);
+		exit;
+	end;
+//
+SymBase:=SymLoadModuleEx(hProcess, 0, pchar(dllname), nil, 0 , 0, nil, 0);
+if (SymBase=0) or (GetLastError()<>ERROR_SUCCESS) then
+	begin
+		raise exception.create('Error with SymLoadModuleEx : '+inttostr(GetLastError()));
+		SymCleanup(GetCurrentProcess());
+		//CloseHandle(hProcess);
+		exit;
+	end;
+//
+  i := SizeOf(udebug.SYMBOL_INFO);
+  zeromemory(@SymbolInfo, i);
+  SymbolInfo.MaxNameLen := 256;
+  SymbolInfo.SizeOfStruct :=  I - Length(SymbolInfo.Name) * SizeOf(SymbolInfo.Name[0]); // 88
+  Deplacement := 0;
+  if udebug.SymFromAddr(Hprocess, address, Deplacement, @SymbolInfo) then
+    // mettre le handle du processus
+  begin
+    {
+    if (SymbolInfo.Flags and SYMFLAG_FUNCTION) = 0 then
+    begin
+      raise exception.create('le symbole retourné n''est pas une fonction');
+      Exit;
+    end;
+    }
+    {SetLength(Result, SymbolInfo.NameLen);
+    for i := 0 to SymbolInfo.NameLen do} name := SymbolInfo.Name;
+    result:=false;
+  end
+  else begin
+    i := GetLastError;
+    raise exception.create('infos pas retournées ; erreur ' + IntToStr(i));
+  end;
+  if not SymCleanup(Hprocess) then
+    raise exception.create('symboles pas nettoyés');
+
+end;
+
+function _SymFromName(dllname,symbol:string;var address:int64):boolean;
+var
+hprocess:thandle;
+symbase:int64; //dword64
+//dllname:string;
+i            : cardinal;
+Deplacement  : dword;
+SymbolInfo   : udebug.SYMBOL_INFO;
+begin
+result:=false;
+hprocess:=getcurrentprocess;
+
+//SymSetOptions(SYMOPT_UNDNAME or SYMOPT_DEBUG or SYMOPT_DEFERRED_LOADS or SYMOPT_PUBLICS_ONLY);
+SymSetOptions(SYMOPT_UNDNAME or SYMOPT_DEBUG or SYMOPT_DEFERRED_LOADS );
+
+SetEnvironmentVariable('_NT_SYMBOL_PATH', 'SRV*C:\\WINDOWS\\TEMP*http://msdl.microsoft.com/download/symbols');
+//
+if not SymInitialize(hProcess, nil, TRUE) then
+	begin
+		raise exception.create('Error with SymInitialize : '+inttostr( GetLastError()));
+		//CloseHandle(hProcess);
+		exit;
+	end;
+//
+SymBase:=udebug.SymLoadModuleEx(hProcess, 0, pchar(dllname), nil, 0 , 0, nil, 0);
+if (SymBase=0) or (GetLastError()<>ERROR_SUCCESS) then
+	begin
+		raise exception.create('Error with SymLoadModuleEx : '+inttostr(GetLastError()));
+		SymCleanup(GetCurrentProcess());
+		//CloseHandle(hProcess);
+		exit;
+	end;
+//
+i := SizeOf(udebug.SYMBOL_INFO);
+  zeromemory(@SymbolInfo, i);
+  SymbolInfo.MaxNameLen := 256;
+  SymbolInfo.SizeOfStruct :=  I - Length(SymbolInfo.Name) * SizeOf(SymbolInfo.Name[0]); // 88
+  Deplacement := 0;
+//
+//case sensitive...
+//if not udebug.SymFromName(hProcess, 'AddAtomA', @SymbolInfo) then
+if not SymFromName(hProcess, pchar(symbol), @SymbolInfo) then
+//if not udebug.SymFromName(hProcess, 'SpInitialize', @SymbolInfo) then
+//if not udebug.SymFromName(hProcess, 'g_fParameter_UseLogonCredential', @SymbolInfo) then
+	begin
+		raise exception.create('Error with SymFromName : ' + inttostr(getLastError()));
+
+		//CloseHandle(hProcess);
+		//HeapFree(GetProcessHeap(), 0, Symbol);
+		SymCleanup(GetCurrentProcess());
+		exit;
+	end;
+
+//showmessage(inttohex(SymbolInfo.Address,sizeof(int64) ));
+address :=SymbolInfo.Address ;
+result:=true;
+
+SymCleanup(GetCurrentProcess());
+
+end;
 
 end.
  
