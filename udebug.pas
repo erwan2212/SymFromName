@@ -114,78 +114,17 @@ var
   Hprocess: HMODULE;
   i            : cardinal;
   Deplacement  : dword;
-  SymbolInfo   : udebug.SYMBOL_INFO; //TSYMBOL_INFO;
-  //Result       : string;
+  SymbolInfo   : SYMBOL_INFO; //TSYMBOL_INFO;
   symbase:int64; //dword64
-begin
-result:=false;
-  Hprocess := getcurrentprocess;
-     //une fonction quelconque,l'adresse peut être supérieur jusqu'à la prochaine fonction
-
-
-  //SymSetOptions(SYMOPT_UNDNAME or SYMOPT_DEBUG or SYMOPT_DEFERRED_LOADS or SYMOPT_PUBLICS_ONLY);
-  SymSetOptions(SYMOPT_UNDNAME or SYMOPT_DEBUG or SYMOPT_DEFERRED_LOADS);
-
-  SetEnvironmentVariable('_NT_SYMBOL_PATH', 'SRV*C:\\WINDOWS\\TEMP*http://msdl.microsoft.com/download/symbols');
-//
-if not SymInitialize(hProcess, nil, TRUE) then
-	begin
-		raise exception.create('Error with SymInitialize : '+inttostr( GetLastError()));
-		//CloseHandle(hProcess);
-		exit;
-	end;
-//
-SymBase:=SymLoadModuleEx(hProcess, 0, pchar(dllname), nil, 0 , 0, nil, 0);
-if (SymBase=0) or (GetLastError()<>ERROR_SUCCESS) then
-	begin
-		raise exception.create('Error with SymLoadModuleEx : '+inttostr(GetLastError()));
-		SymCleanup(GetCurrentProcess());
-		//CloseHandle(hProcess);
-		exit;
-	end;
-//
-  i := SizeOf(udebug.SYMBOL_INFO);
-  zeromemory(@SymbolInfo, i);
-  SymbolInfo.MaxNameLen := 256;
-  SymbolInfo.SizeOfStruct :=  I - Length(SymbolInfo.Name) * SizeOf(SymbolInfo.Name[0]); // 88
-  Deplacement := 0;
-  if udebug.SymFromAddr(Hprocess, address, Deplacement, @SymbolInfo) then
-    // mettre le handle du processus
-  begin
-    {
-    if (SymbolInfo.Flags and SYMFLAG_FUNCTION) = 0 then
-    begin
-      raise exception.create('le symbole retourné n''est pas une fonction');
-      Exit;
-    end;
-    }
-    {SetLength(Result, SymbolInfo.NameLen);
-    for i := 0 to SymbolInfo.NameLen do} name := SymbolInfo.Name;
-    result:=false;
-  end
-  else begin
-    i := GetLastError;
-    raise exception.create('infos pas retournées ; erreur ' + IntToStr(i));
-  end;
-  if not SymCleanup(Hprocess) then
-    raise exception.create('symboles pas nettoyés');
-
-end;
-
-function _SymFromName(dllname,symbol:string;var address:int64):boolean;
-var
-hprocess:thandle;
-symbase:int64; //dword64
-//dllname:string;
-i            : cardinal;
-Deplacement  : dword;
-SymbolInfo   : udebug.SYMBOL_INFO;
 begin
 result:=false;
 hprocess:=getcurrentprocess;
 
 //SymSetOptions(SYMOPT_UNDNAME or SYMOPT_DEBUG or SYMOPT_DEFERRED_LOADS or SYMOPT_PUBLICS_ONLY);
 SymSetOptions(SYMOPT_UNDNAME or SYMOPT_DEBUG or SYMOPT_DEFERRED_LOADS or SYMOPT_CASE_INSENSITIVE );
+
+//use _NT_SYMBOL_PROXY for proxy
+//latest dbghelp versions uses IE proxy settings so no need to set the above
 
 SetEnvironmentVariable('_NT_SYMBOL_PATH', 'SRV*C:\\WINDOWS\\TEMP*http://msdl.microsoft.com/download/symbols');
 //or we could use SymSetSearchPathW
@@ -205,7 +144,7 @@ if (SymBase=0) or (GetLastError()<>ERROR_SUCCESS) then
 		//CloseHandle(hProcess);
 		exit;
 	end;
-//writeln('symbase'+inttohex(symbase,sizeof(symbase));
+//writeln('symbase:'+inttohex(symbase,sizeof(symbase)));
 //
 i := SizeOf(udebug.SYMBOL_INFO);
   zeromemory(@SymbolInfo, i);
@@ -213,20 +152,87 @@ i := SizeOf(udebug.SYMBOL_INFO);
   SymbolInfo.SizeOfStruct :=  I - Length(SymbolInfo.Name) * SizeOf(SymbolInfo.Name[0]); // 88
   Deplacement := 0;
 //
-//case sensitive...
+address:=symbase+address;
+  if udebug.SymFromAddr(Hprocess, address, Deplacement, @SymbolInfo) then
+    // mettre le handle du processus
+  begin
+    {
+    if (SymbolInfo.Flags and SYMFLAG_FUNCTION) = 0 then
+    begin
+      raise exception.create('le symbole retourné n''est pas une fonction');
+      Exit;
+    end;
+    }
+    {SetLength(Result, SymbolInfo.NameLen);
+    for i := 0 to SymbolInfo.NameLen do} name := SymbolInfo.Name;
+    result:=true;
+  end
+  else begin
+    i := GetLastError;
+    raise exception.create('no data returned, ' + IntToStr(i));
+  end;
+
+  SymCleanup(Hprocess);
+
+end;
+
+function _SymFromName(dllname,symbol:string;var address:int64):boolean;
+var
+hprocess:thandle;
+symbase:int64; //dword64
+//dllname:string;
+i            : cardinal;
+Deplacement  : dword;
+SymbolInfo   : udebug.SYMBOL_INFO;
+begin
+result:=false;
+hprocess:=getcurrentprocess;
+
+//SymSetOptions(SYMOPT_UNDNAME or SYMOPT_DEBUG or SYMOPT_DEFERRED_LOADS or SYMOPT_PUBLICS_ONLY);
+SymSetOptions(SYMOPT_UNDNAME or SYMOPT_DEBUG or SYMOPT_DEFERRED_LOADS or SYMOPT_CASE_INSENSITIVE );
+
+//use _NT_SYMBOL_PROXY for proxy
+//latest dbghelp versions uses IE proxy settings so no need to set the above
+
+SetEnvironmentVariable('_NT_SYMBOL_PATH', 'SRV*C:\\WINDOWS\\TEMP*http://msdl.microsoft.com/download/symbols');
+//or we could use SymSetSearchPathW
+//
+if not SymInitialize(hProcess, nil, TRUE) then
+	begin
+		raise exception.create('Error with SymInitialize : '+inttostr( GetLastError()));
+		//CloseHandle(hProcess);
+		exit;
+	end;
+//
+SymBase:=0;
+SymBase:=udebug.SymLoadModuleEx(hProcess, 0, pchar(dllname), nil, 0 , 0, nil, 0);
+if (SymBase=0) or (GetLastError()<>ERROR_SUCCESS) then
+	begin
+      		SymCleanup(GetCurrentProcess());
+		raise exception.create('Error with SymLoadModuleEx : '+inttostr(GetLastError()));
+		//CloseHandle(hProcess);
+		exit;
+	end;
+//writeln('symbase:'+inttohex(symbase,sizeof(symbase)));
+//
+i := SizeOf(udebug.SYMBOL_INFO);
+  zeromemory(@SymbolInfo, i);
+  SymbolInfo.MaxNameLen := 256;
+  SymbolInfo.SizeOfStruct :=  I - Length(SymbolInfo.Name) * SizeOf(SymbolInfo.Name[0]); // 88
+  Deplacement := 0;
+//
 if not SymFromName(hProcess, pchar(symbol), @SymbolInfo) then
 	begin
+       		SymCleanup(GetCurrentProcess());
 		raise exception.create('Error with SymFromName : ' + inttostr(getLastError()));
-
 		//CloseHandle(hProcess);
 		//HeapFree(GetProcessHeap(), 0, Symbol);
-		SymCleanup(GetCurrentProcess());
 		exit;
 	end;
 
 //showmessage(inttohex(SymbolInfo.Address,sizeof(int64) ));
 //writeln(SymbolInfo.ModBase);
-address :=  SymbolInfo.Address ;
+address :=  SymbolInfo.Address-symbase ;
 result:=true;
 
 SymCleanup(GetCurrentProcess());

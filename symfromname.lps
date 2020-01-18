@@ -9,8 +9,9 @@
         <Filename Value="symfromname.lpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="33" Y="23"/>
-        <UsageCount Value="23"/>
+        <TopLine Value="9"/>
+        <CursorPos X="55" Y="23"/>
+        <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -19,18 +20,18 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="88"/>
         <CursorPos X="70" Y="105"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="32"/>
       </Unit1>
       <Unit2>
         <Filename Value="udebug.pas"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="211"/>
-        <CursorPos X="75" Y="226"/>
-        <UsageCount Value="10"/>
+        <TopLine Value="144"/>
+        <CursorPos X="78" Y="160"/>
+        <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit2>
     </Units>
-    <JumpHistory Count="18" HistoryIndex="17">
+    <JumpHistory Count="19" HistoryIndex="18">
       <Position1>
         <Filename Value="symfromname.lpr"/>
         <Caret Line="2"/>
@@ -103,6 +104,10 @@
         <Filename Value="udebug.pas"/>
         <Caret Line="208" TopLine="201"/>
       </Position18>
+      <Position19>
+        <Filename Value="symfromname.lpr"/>
+        <Caret Line="27" Column="33" TopLine="6"/>
+      </Position19>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

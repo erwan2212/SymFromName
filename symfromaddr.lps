@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Release"/>
+    <Units Count="3">
+      <Unit0>
+        <Filename Value="symfromaddr.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="symfromname"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="9"/>
+        <CursorPos X="42" Y="22"/>
+        <UsageCount Value="25"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\udebug.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="88"/>
+        <CursorPos X="70" Y="105"/>
+        <UsageCount Value="25"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="udebug.pas"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="144"/>
+        <CursorPos X="78" Y="160"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit2>
+    </Units>
+    <JumpHistory Count="19" HistoryIndex="18">
+      <Position1>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="2"/>
+      </Position1>
+      <Position2>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Column="31"/>
+      </Position2>
+      <Position3>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="66" Column="14" TopLine="43"/>
+      </Position3>
+      <Position4>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="3" Column="14"/>
+      </Position4>
+      <Position5>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="54" Column="43" TopLine="35"/>
+      </Position5>
+      <Position6>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="65" Column="49" TopLine="47"/>
+      </Position6>
+      <Position7>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="73" Column="10" TopLine="55"/>
+      </Position7>
+      <Position8>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="82" Column="82" TopLine="59"/>
+      </Position8>
+      <Position9>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="79" Column="51" TopLine="64"/>
+      </Position9>
+      <Position10>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="16" Column="73"/>
+      </Position10>
+      <Position11>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="17" Column="40"/>
+      </Position11>
+      <Position12>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="16" Column="41"/>
+      </Position12>
+      <Position13>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="21" Column="28" TopLine="3"/>
+      </Position13>
+      <Position14>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="19" Column="33" TopLine="3"/>
+      </Position14>
+      <Position15>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="7" Column="27"/>
+      </Position15>
+      <Position16>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="19" Column="15"/>
+      </Position16>
+      <Position17>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="4" Column="23"/>
+      </Position17>
+      <Position18>
+        <Filename Value="udebug.pas"/>
+        <Caret Line="208" TopLine="201"/>
+      </Position18>
+      <Position19>
+        <Filename Value="symfromaddr.lpr"/>
+        <Caret Line="27" Column="33" TopLine="6"/>
+      </Position19>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

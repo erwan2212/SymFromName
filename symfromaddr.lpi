@@ -11,7 +11,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="symfromname"/>
+      <Title Value="symfromaddr"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -22,7 +22,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="symfromname"/>
+            <Filename Value="symfromaddr"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -59,7 +59,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="symfromname"/>
+            <Filename Value="symfromaddr-$(TargetOS)"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -92,8 +92,9 @@
     </RunParams>
     <Units Count="2">
       <Unit0>
-        <Filename Value="symfromname.lpr"/>
+        <Filename Value="symfromaddr.lpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="symfromname"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\udebug.pas"/>
@@ -105,7 +106,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="symfromname"/>
+      <Filename Value="symfromaddr"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
