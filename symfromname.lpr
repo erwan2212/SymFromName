@@ -15,6 +15,7 @@ begin
     writeln('dllname:'+paramstr(1));
     writeln('symbol:'+paramstr(2));
     //
+    hmod:=0;
     hmod:=LoadLibrary (pchar(paramstr(1)));
     //writeln(inttohex(hmod,sizeof(hmod)));
     //
@@ -23,8 +24,8 @@ begin
     if udebug._symfromname(paramstr(1),paramstr(2),address)
      then
      begin
-       writeln('Address:'+inttohex(address,sizeof(address)));
-       writeln('Virtual Address:'+inttohex(hmod+address,sizeof(address)));
+       writeln('Relative Address:'+inttohex(address,sizeof(address)));
+       if hmod>0 then writeln('Virtual Address:'+inttohex(hmod+address,sizeof(address)));
      end
      else writeln('failed');
 
