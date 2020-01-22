@@ -27,7 +27,7 @@ begin
      else writeln('failed');
 	}
     
-    if udebug._SymFromAddr (paramstr(1),int64(strtoint(paramstr(2))),name)
+    if udebug._SymFromAddr (paramstr(1),int64(strtoint('$'+paramstr(2))),name)
        then writeln('Name:'+name)
        else writeln('failed');
     

@@ -84,6 +84,8 @@ function SymInitialize(aHandle: HMODULE; aUserSearchPath: PChar;
   name 'SymInitialize'
 {$ENDIF};
 
+function SymSetSearchPath(hProcess:HANDLE;SearchPath:pchar) : BOOL; stdcall;external DbgHelpDll;
+
 function SymSetOptions(SymOptions: DWORD): DWORD; stdcall;external DbgHelpDll;
 
 function SymFromName(hProcess: THANDLE; Name: pchar; Symbol: pointer): BOOL; stdcall;external DbgHelpDll;
@@ -126,21 +128,25 @@ SymSetOptions(SYMOPT_UNDNAME or SYMOPT_DEBUG or SYMOPT_DEFERRED_LOADS or SYMOPT_
 //use _NT_SYMBOL_PROXY for proxy
 //latest dbghelp versions uses IE proxy settings so no need to set the above
 
-SetEnvironmentVariable('_NT_SYMBOL_PATH', 'SRV*C:\\WINDOWS\\TEMP*http://msdl.microsoft.com/download/symbols');
+if GetEnvironmentVariable('_NT_SYMBOL_PATH')=''
+   then SetEnvironmentVariable('_NT_SYMBOL_PATH', 'SRV*C:\\WINDOWS\\TEMP*http://msdl.microsoft.com/download/symbols');
 //or we could use SymSetSearchPathW
 //
-if not SymInitialize(hProcess, nil, TRUE) then
+
+if not SymInitialize(hProcess, nil, true) then
 	begin
 		raise exception.create('Error with SymInitialize : '+inttostr( GetLastError()));
 		//CloseHandle(hProcess);
 		exit;
 	end;
 //
+SymBase:=0;
+setlasterror(0);
 SymBase:=udebug.SymLoadModuleEx(hProcess, 0, pchar(dllname), nil, 0 , 0, nil, 0);
-if (SymBase=0) or (GetLastError()<>ERROR_SUCCESS) then
+if (SymBase=0) {or (GetLastError()<>ERROR_SUCCESS)} then
 	begin
 		raise exception.create('Error with SymLoadModuleEx : '+inttostr(GetLastError()));
-		SymCleanup(GetCurrentProcess());
+		SymCleanup(hProcess);
 		//CloseHandle(hProcess);
 		exit;
 	end;
@@ -194,21 +200,27 @@ SymSetOptions(SYMOPT_UNDNAME or SYMOPT_DEBUG or SYMOPT_DEFERRED_LOADS or SYMOPT_
 //use _NT_SYMBOL_PROXY for proxy
 //latest dbghelp versions uses IE proxy settings so no need to set the above
 
-SetEnvironmentVariable('_NT_SYMBOL_PATH', 'SRV*C:\\WINDOWS\\TEMP*http://msdl.microsoft.com/download/symbols');
+if GetEnvironmentVariable('_NT_SYMBOL_PATH')=''
+   then SetEnvironmentVariable('_NT_SYMBOL_PATH', 'SRV*C:\\WINDOWS\\TEMP*http://msdl.microsoft.com/download/symbols');
+
 //or we could use SymSetSearchPathW
 //
-if not SymInitialize(hProcess, nil, TRUE) then
+
+if not SymInitialize(hProcess, nil, true) then
 	begin
 		raise exception.create('Error with SymInitialize : '+inttostr( GetLastError()));
 		//CloseHandle(hProcess);
 		exit;
 	end;
 //
+//if not SymSetSearchPath(hprocess,'.;http://msdl.microsoft.com/download/symbols') then writeln('SymSetSearchPath failed');
+//
 SymBase:=0;
+setlasterror(0);
 SymBase:=udebug.SymLoadModuleEx(hProcess, 0, pchar(dllname), nil, 0 , 0, nil, 0);
-if (SymBase=0) or (GetLastError()<>ERROR_SUCCESS) then
+if (SymBase=0)  {or (GetLastError()<>ERROR_SUCCESS)} then
 	begin
-      		SymCleanup(GetCurrentProcess());
+      		SymCleanup(hProcess);
 		raise exception.create('Error with SymLoadModuleEx : '+inttostr(GetLastError()));
 		//CloseHandle(hProcess);
 		exit;
@@ -223,7 +235,7 @@ i := SizeOf(udebug.SYMBOL_INFO);
 //
 if not SymFromName(hProcess, pchar(symbol), @SymbolInfo) then
 	begin
-       		SymCleanup(GetCurrentProcess());
+       		SymCleanup(hProcess);
 		raise exception.create('Error with SymFromName : ' + inttostr(getLastError()));
 		//CloseHandle(hProcess);
 		//HeapFree(GetProcessHeap(), 0, Symbol);
@@ -235,7 +247,7 @@ if not SymFromName(hProcess, pchar(symbol), @SymbolInfo) then
 address :=  SymbolInfo.Address-symbase ;
 result:=true;
 
-SymCleanup(GetCurrentProcess());
+SymCleanup(hProcess);
 
 end;
 
