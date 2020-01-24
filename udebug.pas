@@ -1,3 +1,4 @@
+{$mode delphi}
 unit udebug;
 
 interface
@@ -73,16 +74,13 @@ type
   end;
   SYMBOL_INFO=TSYMBOL_INFO ;
 
+
+ {
 function SymLoadModuleEx(hProcess, hFile: THANDLE; ImageName, ModuleName: PAnsiChar; BaseOfDll: INT64;
   DllSize: DWORD; Data: PMODLOAD_DATA; Flag: DWORD): INT64; stdcall; external DbgHelpDll;
 
 function SymInitialize(aHandle: HMODULE; aUserSearchPath: PChar;
-  aInvadeProcess: Boolean): Boolean; stdcall; external DbgHelpDll
-{$IFDEF UNICODE}
-  name 'SymInitializeW'
-{$ELSE}
-  name 'SymInitialize'
-{$ENDIF};
+  aInvadeProcess: Boolean): Boolean; stdcall; external DbgHelpDll;
 
 function SymSetSearchPath(hProcess:HANDLE;SearchPath:pchar) : BOOL; stdcall;external DbgHelpDll;
 
@@ -93,21 +91,27 @@ function SymFromName(hProcess: THANDLE; Name: pchar; Symbol: pointer): BOOL; std
 function SymFromAddr(aHandle: HMODULE;
   aAdress: int64;
   aDisplacement: DWORD;
-  aSymbolInfo: Pointer): Boolean; stdcall; external DbgHelpDll
-{$IFDEF UNICODE}
-  name 'SymFromAddrW'
-{$ELSE}
-  name 'SymFromAddr'
-{$ENDIF};
+  aSymbolInfo: Pointer): Boolean; stdcall; external DbgHelpDll;
 
 function SymCleanup(aHandle: HMODULE): Boolean; stdcall; external DbgHelpDll;
+}
 
+{
 function ImageNtHeader(Base: Pointer): PIMAGE_NT_HEADERS; stdcall; external 'dbghelp.dll';
 function ImageRvaToVa(NtHeaders: Pointer; Base: Pointer; Rva: ULONG;
   LastRvaSection: Pointer): Pointer; stdcall; external 'dbghelp.dll';
+}
 
 function _SymFromName(dllname,symbol:string;var address:int64):boolean;
 function _SymFromAddr(dllname:string;address:int64;var name:string):boolean;
+
+var
+SymLoadModuleEx:function(hProcess, hFile: THANDLE; ImageName, ModuleName: PAnsiChar; BaseOfDll: INT64;DllSize: DWORD; Data: PMODLOAD_DATA; Flag: DWORD): INT64; stdcall;
+SymInitialize:function (aHandle: HMODULE; aUserSearchPath: PChar; aInvadeProcess: Boolean): Boolean; stdcall;
+SymSetOptions:function(SymOptions: DWORD): DWORD; stdcall;
+SymFromName:function (hProcess: THANDLE; Name: pchar; Symbol: pointer): BOOL; stdcall;
+SymFromAddr:function(aHandle: HMODULE;aAdress: int64;aDisplacement: DWORD;aSymbolInfo: Pointer): Boolean; stdcall;
+SymCleanup:function(aHandle: HMODULE): Boolean; stdcall;
 
 implementation
 
@@ -250,6 +254,39 @@ result:=true;
 SymCleanup(hProcess);
 
 end;
+
+function init_lib:boolean;
+var
+{$IFDEF win32}lib:cardinal;{$endif}
+{$IFDEF win64}lib:int64;{$endif}
+p:pchar;
+begin
+result:=false;
+try
+lib:=0;
+lib:=loadlibrary(pchar(DbgHelpDll));
+if lib<=0 then
+  begin
+  raise exception.Create  ('could not loadlibrary:'+inttostr(getlasterror));
+  exit;
+  end;
+//
+SymLoadModuleEx:=getProcAddress(lib,'SymLoadModuleEx');
+SymInitialize:=getProcAddress(lib,'SymInitialize');
+SymSetOptions:=getProcAddress(lib,'SymSetOptions');
+SymFromName:=getProcAddress(lib,'SymFromName');
+SymFromAddr:=getProcAddress(lib,'SymFromAddr');
+SymCleanup:=getProcAddress(lib,'SymCleanup');
+//
+result:=true;
+except
+on e:exception do raise exception.Create ('loadlibrary error:'+e.message);
+end;
+end;
+
+
+initialization
+init_lib;
 
 end.
  

@@ -21,7 +21,7 @@ begin
     //
     //g_fParameter_UseLogonCredential
     //if udebug._symfromname('c:\windows\system32\wdigest.dll','SpAcceptCredentials',address)
-    if udebug._symfromname(paramstr(1),paramstr(2),address)
+    if _symfromname(paramstr(1),paramstr(2),address)
      then
      begin
        writeln('Relative Address:'+inttohex(address,sizeof(address)));

@@ -4,13 +4,13 @@
     <PathDelim Value="\"/>
     <Version Value="10"/>
     <BuildModes Active="Release"/>
-    <Units Count="5">
+    <Units Count="3">
       <Unit0>
         <Filename Value="symfromname.lpr"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="10"/>
-        <CursorPos X="23" Y="24"/>
-        <UsageCount Value="32"/>
+        <TopLine Value="13"/>
+        <CursorPos X="8" Y="24"/>
+        <UsageCount Value="268"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -19,34 +19,19 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="88"/>
         <CursorPos X="70" Y="105"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="268"/>
       </Unit1>
       <Unit2>
         <Filename Value="udebug.pas"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="120"/>
-        <CursorPos X="4" Y="132"/>
-        <UsageCount Value="14"/>
+        <TopLine Value="262"/>
+        <CursorPos Y="280"/>
+        <UsageCount Value="132"/>
         <Loaded Value="True"/>
       </Unit2>
-      <Unit3>
-        <Filename Value="C:\FPC\3.0.0\source\rtl\win\wininc\ascdef.inc"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="64"/>
-        <CursorPos X="32" Y="75"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="C:\FPC\3.0.0\source\rtl\objpas\sysutils\osutilsh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="14"/>
-        <CursorPos X="10" Y="26"/>
-        <UsageCount Value="10"/>
-      </Unit4>
     </Units>
-    <JumpHistory Count="24" HistoryIndex="23">
+    <JumpHistory Count="28" HistoryIndex="27">
       <Position1>
         <Filename Value="symfromname.lpr"/>
         <Caret Line="2"/>
@@ -143,6 +128,22 @@
         <Filename Value="udebug.pas"/>
         <Caret Line="131" Column="50" TopLine="119"/>
       </Position24>
+      <Position25>
+        <Filename Value="udebug.pas"/>
+        <Caret Line="205" TopLine="192"/>
+      </Position25>
+      <Position26>
+        <Filename Value="udebug.pas"/>
+        <Caret Line="272" TopLine="264"/>
+      </Position26>
+      <Position27>
+        <Filename Value="udebug.pas"/>
+        <Caret Line="91" Column="64" TopLine="77"/>
+      </Position27>
+      <Position28>
+        <Filename Value="udebug.pas"/>
+        <Caret Line="108" TopLine="93"/>
+      </Position28>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>
