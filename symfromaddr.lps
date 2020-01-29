@@ -9,8 +9,9 @@
         <Filename Value="symfromaddr.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="symfromname"/>
+        <IsVisibleTab Value="True"/>
         <TopLine Value="13"/>
-        <CursorPos X="40" Y="27"/>
+        <CursorPos X="57" Y="25"/>
         <UsageCount Value="25"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -24,10 +25,9 @@
       </Unit1>
       <Unit2>
         <Filename Value="udebug.pas"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="132"/>
-        <CursorPos X="31" Y="147"/>
+        <TopLine Value="131"/>
+        <CursorPos X="10" Y="124"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit2>

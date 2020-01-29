@@ -102,8 +102,8 @@ function ImageRvaToVa(NtHeaders: Pointer; Base: Pointer; Rva: ULONG;
   LastRvaSection: Pointer): Pointer; stdcall; external 'dbghelp.dll';
 }
 
-function _SymFromName(dllname,symbol:string;var address:int64):boolean;
-function _SymFromAddr(dllname:string;address:int64;var name:string):boolean;
+function _SymFromName(dllname,symbol:string;var address:nativeuint):boolean;
+function _SymFromAddr(dllname:string;address:nativeuint;var name:string):boolean;
 
 var
 SymLoadModuleEx:function(hProcess, hFile: THANDLE; ImageName, ModuleName: PAnsiChar; BaseOfDll: INT64;DllSize: DWORD; Data: PMODLOAD_DATA; Flag: DWORD): INT64; stdcall;
@@ -115,7 +115,7 @@ SymCleanup:function(aHandle: HMODULE): Boolean; stdcall;
 
 implementation
 
-function _SymFromAddr(dllname:string;address:int64;var name:string):boolean;
+function _SymFromAddr(dllname:string;address:nativeuint;var name:string):boolean;
 var
   Hprocess: HMODULE;
   i            : cardinal;
@@ -186,7 +186,7 @@ address:=symbase+address;
 
 end;
 
-function _SymFromName(dllname,symbol:string;var address:int64):boolean;
+function _SymFromName(dllname,symbol:string;var address:nativeuint):boolean;
 var
 hprocess:thandle;
 symbase:int64; //dword64
@@ -246,8 +246,9 @@ if not SymFromName(hProcess, pchar(symbol), @SymbolInfo) then
 		exit;
 	end;
 
-//showmessage(inttohex(SymbolInfo.Address,sizeof(int64) ));
-//writeln(SymbolInfo.ModBase);
+//writeln(inttohex(SymbolInfo.Address,sizeof(int64) ));
+//writeln(inttohex(SymbolInfo.ModBase,sizeof(SymbolInfo.ModBase)));
+//writeln(inttohex(symbase,sizeof(symbase)));
 address :=  SymbolInfo.Address-symbase ;
 result:=true;
 
